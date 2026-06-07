@@ -1,0 +1,52 @@
+from pathlib import Path
+import zipfile
+
+base = Path("/mnt/data/sekharlee-website")
+base.mkdir(exist_ok=True)
+
+html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SekharLee</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:20px;line-height:1.6}
+header{text-align:center}
+.btn{display:inline-block;padding:10px 16px;border:1px solid #333;text-decoration:none;color:#333}
+</style>
+</head>
+<body>
+<header>
+<h1>SekharLee</h1>
+<p>Technology • Security • Automation</p>
+<a class="btn" href="mailto:contact@example.com">Contact</a>
+</header>
+<hr>
+<h2>About</h2>
+<p>Welcome to SekharLee. This website showcases projects, automation, cybersecurity, and technology content.</p>
+
+<h2>Projects</h2>
+<ul>
+<li>Automation & AI</li>
+<li>Cybersecurity Research</li>
+<li>Cloud & Infrastructure</li>
+</ul>
+
+<h2>Blog</h2>
+<p>Add your articles here.</p>
+
+<footer>
+<hr>
+<p>© 2026 SekharLee</p>
+</footer>
+</body>
+</html>"""
+
+(base / "index.html").write_text(html, encoding="utf-8")
+
+zip_path = "/mnt/data/sekharlee-website.zip"
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    z.write(base / "index.html", arcname="index.html")
+
+print(zip_path)
